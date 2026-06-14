@@ -35,6 +35,7 @@ import AnalyticsDashboard from "./components/AnalyticsDashboard";
 import { auth, db, handleFirestoreError, OperationType } from "./firebase";
 import {
   signInWithPopup,
+  signInWithRedirect,
   signOut,
   GoogleAuthProvider,
   onAuthStateChanged,
@@ -266,6 +267,10 @@ export default function App() {
       }
     } catch (error) {
       console.error("Google login authentication failed", error);
+      if ((error as any)?.code === "auth/operation-not-supported-in-this-environment") {
+        await signInWithRedirect(auth, provider);
+        return;
+      }
       alert("Google log in failed. Please ensure popups are enabled.");
     }
   };

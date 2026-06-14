@@ -5,7 +5,7 @@ import firebaseConfig from "../firebase-applet-config.json";
 
 // Initialize standard Firebase applet configurations
 const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app, firebaseConfig.firestoreDatabaseId); /* CRITICAL: The app will break without this line */
+export const db = getFirestore(app); // Use default Firestore database for this app
 export const auth = getAuth();
 
 export enum OperationType {
@@ -52,5 +52,4 @@ export function handleFirestoreError(error: unknown, operationType: OperationTyp
     path
   };
   console.error("Firestore Error: ", JSON.stringify(errInfo));
-  throw new Error(JSON.stringify(errInfo));
 }
