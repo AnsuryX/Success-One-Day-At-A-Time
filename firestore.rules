@@ -1,0 +1,93 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global Safety Net default-deny catch-all rule
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Auth Helper validation primitives
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isVerifiedUser() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isVerifiedOwner(userId) {
+      return isVerifiedUser() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    // Entity Shape Schema Validation Blueprints (Defense against shadow mapping)
+    function isValidUser(data) {
+      return data.uid is string && data.uid.size() <= 128
+          && data.email is string && data.email.size() <= 200
+          && (!('displayName' in data) || (data.displayName is string && data.displayName.size() <= 200))
+          && (!('photoURL' in data) || (data.photoURL is string && data.photoURL.size() <= 1000));
+    }
+
+    function isValidDailyEntry(data) {
+      return data.date is string && data.date.size() <= 24
+          && data.userId is string && data.userId.size() <= 128
+          && (!('challenge' in data) || (data.challenge is string && data.challenge.size() <= 1200))
+          && (!('result' in data) || (data.result is string && data.result.size() <= 1200))
+          && (!('commitToGoals' in data) || (data.commitToGoals is bool))
+          && (!('commitMonths' in data) || (data.commitMonths is string && data.commitMonths.size() <= 24))
+          && (!('longTermGoals' in data) || (data.longTermGoals is list && data.longTermGoals.size() <= 10))
+          && (!('priorities' in data) || (data.priorities is map))
+          && (!('habits' in data) || (data.habits is map))
+          && (!('spirit' in data) || (data.spirit is map))
+          && (!('checkIn' in data) || (data.checkIn is map))
+          && (!('madeTimeFor' in data) || (data.madeTimeFor is map))
+          && (!('updatedAt' in data) || (data.updatedAt is timestamp));
+    }
+
+    // Master Gate Rule Rules sets
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+      allow create: if isVerifiedOwner(userId)
+                    && isValidId(userId)
+                    && isValidUser(incoming())
+                    && incoming().uid == userId
+                    && incoming().createdAt == request.time;
+      allow update: if isVerifiedOwner(userId)
+                    && isValidUser(incoming())
+                    && incoming().uid == userId
+                    && incoming().createdAt == resource.data.createdAt
+                    && incoming().diff(resource.data).affectedKeys().hasOnly(['displayName', 'photoURL', 'email', 'updatedAt']);
+      allow delete: if isVerifiedOwner(userId);
+    }
+
+    match /users/{userId}/entries/{date} {
+      allow read: if isOwner(userId);
+      allow create: if isVerifiedOwner(userId)
+                    && isValidId(userId)
+                    && isValidId(date)
+                    && isValidDailyEntry(incoming())
+                    && incoming().userId == userId
+                    && incoming().date == date
+                    && exists(/databases/$(database)/documents/users/$(userId));
+      allow update: if isVerifiedOwner(userId)
+                    && isValidDailyEntry(incoming())
+                    && incoming().userId == userId
+                    && incoming().date == date
+                    && incoming().diff(resource.data).affectedKeys().hasOnly(['challenge', 'result', 'commitToGoals', 'commitMonths', 'longTermGoals', 'priorities', 'habits', 'spirit', 'checkIn', 'madeTimeFor', 'updatedAt']);
+      allow delete: if isVerifiedOwner(userId);
+    }
+
+  }
+}

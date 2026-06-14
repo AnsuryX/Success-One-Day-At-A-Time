@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;805&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+}
+
+/* Elegant lined paper input style mimicking the physical planner paper lines */
+.line-input {
+  background-image: linear-gradient(rgba(0,0,0,0) 95%, rgba(30,58,138,0.1) 95%);
+  background-size: 100% 2rem;
+  line-height: 2rem;
+  border: none;
+  outline: none;
+}
+
+.line-input:focus {
+  background-image: linear-gradient(rgba(0,0,0,0) 95%, rgba(30,58,138,0.3) 95%);
+}
+
+/* Custom scrollbar for beautiful dashboard logs views */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.2);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.4);
+}
+
+/* Custom styles to prevent system overlaps */
+input::placeholder {
+  color: rgba(156, 163, 175, 0.4);
+}
+
+@media print {
+  body {
+    background-color: white;
+    color: black;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+}
+

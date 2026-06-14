@@ -1,0 +1,87 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Represents a user profile with basic identification fields",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "The unique user ID" },
+        "email": { "type": "string", "description": "The email of the user" },
+        "displayName": { "type": "string", "description": "Full name display string" },
+        "photoURL": { "type": "string", "description": "Avatar image web link" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" }
+      },
+      "required": ["uid", "email"]
+    },
+    "ToDoItem": {
+      "title": "ToDoItem",
+      "description": "Checklist item",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "text": { "type": "string" },
+        "completed": { "type": "boolean" }
+      },
+      "required": ["id", "text", "completed"]
+    },
+    "MadeTimeFields": {
+      "title": "MadeTimeFields",
+      "description": "Categories for daily investments",
+      "type": "object",
+      "properties": {
+        "healthyFood": { "type": "boolean" },
+        "yogaExercise": { "type": "boolean" },
+        "familyFriends": { "type": "boolean" },
+        "vitaminsMedicine": { "type": "boolean" },
+        "funHumor": { "type": "boolean" },
+        "workingGoals": { "type": "boolean" },
+        "quietNature": { "type": "boolean" },
+        "prayersSpirituality": { "type": "boolean" },
+        "givingOthers": { "type": "boolean" }
+      }
+    },
+    "DailyEntry": {
+      "title": "DailyEntry",
+      "description": "A single day's success planner journal log",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string" },
+        "challenge": { "type": "string" },
+        "result": { "type": "string" },
+        "commitToGoals": { "type": "boolean" },
+        "commitMonths": { "type": "string" },
+        "longTermGoals": {
+          "type": "array"
+        },
+        "priorities": {
+          "type": "object"
+        },
+        "habits": {
+          "type": "object"
+        },
+        "spirit": {
+          "type": "object"
+        },
+        "checkIn": {
+          "type": "object"
+        },
+        "madeTimeFor": {
+          "type": "object"
+        },
+        "userId": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["date", "userId"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "System profile settings logs"
+    },
+    "users/{userId}/entries/{date}": {
+      "schema": "DailyEntry",
+      "description": "Chronological success goals logs"
+    }
+  }
+}

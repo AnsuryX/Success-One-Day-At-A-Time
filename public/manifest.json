@@ -1,0 +1,41 @@
+{
+  "short_name": "SuccessPlanner",
+  "name": "Daily Success Planner - One-Day-At-A-Time",
+  "description": "Chronological success goals, habits tracker, and mindfulness meditation companion.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f1f5f9",
+  "theme_color": "#1e3a8a",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "utilities", "lifestyle"],
+  "shortcuts": [
+    {
+      "name": "Today's Planner",
+      "url": "/?shortcut=today"
+    },
+    {
+      "name": "Analytics trends",
+      "url": "/?shortcut=analytics"
+    }
+  ]
+}

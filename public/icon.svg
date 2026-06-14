@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a8a" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#f59e0b" />
+    </linearGradient>
+    <linearGradient id="sky" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#60a5fa" />
+      <stop offset="100%" stop-color="#38bdf8" />
+    </linearGradient>
+  </defs>
+  <!-- Base background -->
+  <rect width="512" height="512" rx="128" fill="url(#bg)" />
+  
+  <!-- Subtle circular halo -->
+  <circle cx="256" cy="256" r="180" fill="none" stroke="#1e40af" stroke-width="8" opacity="0.4" stroke-dasharray="16 12" />
+  
+  <!-- Ascending Achievement Emblem / Success Lotus -->
+  <g transform="translate(256, 260)">
+    <!-- Golden Star Sparkle on Top -->
+    <path d="M 0,-130 L 14,-85 L 60,-85 L 22,-60 L 36,-15 L 0,-42 L -36,-15 L -22,-60 L -60,-85 L -14,-85 Z" fill="url(#gold)" filter="drop-shadow(0px 4px 6px rgba(0,0,0,0.3))" />
+    
+    <!-- Rising elegant background leaves -->
+    <path d="M0,50 C60,20 110,-30 110,-90 C80,-60 40,-40 0,30 Z" fill="url(#sky)" opacity="0.75" />
+    <path d="M0,50 C-60,20 -110,-30 -110,-90 C-80,-60 -40,-40 0,30 Z" fill="url(#sky)" opacity="0.75" />
+    
+    <!-- Dynamic ascending central path -->
+    <path d="M0,70 L24,40 L0,10 L-24,40 Z" fill="url(#gold)" />
+    
+    <!-- Grounding focus circle -->
+    <circle cx="0" cy="115" r="24" fill="#60a5fa" />
+    
+    <!-- Main Center Petal / Achievement Pillar -->
+    <path d="M0,-65 C25,-25 35,15 0,45 C-25,15 -15,-25 0,-65 Z" fill="url(#gold)" filter="drop-shadow(0px 2px 4px rgba(0,0,0,0.25))" />
+  </g>
+</svg>

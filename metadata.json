@@ -1,0 +1,6 @@
+{
+  "name": "Daily Success Planner",
+  "description": "An interactive digital success planner, habit tracker, and mindfulness journal replicating the classic One-Day-At-A-Time layout.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
